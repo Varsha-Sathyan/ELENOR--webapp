@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sign In | ELENOR</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Italiana&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/login.css">
+  <script src="/js/login.js" defer></script>
+</head>
+
+<body>
+
+  <header class="header">
+    <a href="/" class="logo">
+      <span class="brand">ELENOR</span>
+      <span class="subtitle">MAISON DE BEAUTÉ</span>
+    </a>
+
+    <a href="/login" class="profile-icon" aria-label="Account">
+      <svg viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.7">
+        <circle cx="12" cy="8" r="3.5"/>
+        <path d="M5 20v-2a7 7 0 0 1 14 0v2H5z"/>
+      </svg>
+    </a>
+  </header>
+
+  <main class="login-container">
+
+    <!-- LEFT IMAGE -->
+    <section class="image-section">
+      <img
+        src="/images/elenor-products.png"
+        alt="ELENOR luxury skincare collection"
+        class="product-image"
+      >
+
+      <div class="ritual-badge">
+        <span class="gold-dot"></span>
+        THE ELENOR RITUAL
+      </div>
+
+      <div class="image-caption">
+        <div>
+          <span class="caption-label">WELCOME TO ELENOR</span>
+          <h2>Beauty, thoughtfully curated.</h2>
+        </div>
+
+        <div class="maison-badge">
+          <span class="sparkle">✦</span>
+          <div>
+            <strong>MAISON N° 01</strong>
+            <small>PLACE VENDÔME</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT LOGIN FORM -->
+    <section class="form-section">
+
+      <h1>Welcome <em>Back.</em></h1>
+
+      <p class="description">
+        Return to your ELENOR experience and continue your
+        beauty ritual through bespoke Parisian artisanal care.
+      </p>
+
+      <% if (typeof error !== "undefined" && error) { %>
+        <div class="error-message" role="alert">
+          <%= error %>
+        </div>
+      <% } %>
+
+      <form action="/login" method="POST" id="loginForm">
+
+        <div class="form-group">
+          <label for="email">EMAIL ADDRESS</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="camille.devalois@haute.fr"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">PASSWORD</label>
+
+          <div class="password-wrapper">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            >
+
+            <button
+              type="button"
+              id="togglePassword"
+              class="toggle-password"
+              aria-label="Show password"
+              aria-pressed="false"
+            >
+              <svg viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="1.8">
+                <path d="M3 3l18 18"/>
+                <path d="M10.6 5.2A10.8 10.8 0 0 1 12 5c5 0 9 4 10 7a12 12 0 0 1-3.1 4.4"/>
+                <path d="M6.2 6.2C3.9 7.7 2.5 10 2 12c1 3 5 7 10 7 1.7 0 3.3-.5 4.7-1.3"/>
+                <path d="M10 10a3 3 0 0 0 4 4"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-options">
+          <label class="remember">
+            <input type="checkbox" name="remember" value="on">
+            <span>Remember me</span>
+          </label>
+
+          <a href="/forgot-password" class="forgot">
+            forgot password?
+          </a>
+        </div>
+
+        <button type="submit" class="signin-btn">
+          SIGN IN <span aria-hidden="true">→</span>
+        </button>
+
+      </form>
+
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+      <a href="/auth/google" class="google-btn">
+        <svg width="20" height="20" viewBox="0 0 48 48"
+             aria-hidden="true">
+          <path fill="#EA4335"
+            d="M24 9.5c3.5 0 6.7 1.2 9.2 3.6l6.9-6.9C35.9 2.2 30.5 0 24 0 14.6 0 6.5 5.4 2.6 13.2l8 6.2C12.5 13.7 17.8 9.5 24 9.5z"/>
+          <path fill="#4285F4"
+            d="M46.98 24.55c0-1.6-.15-3.1-.38-4.55H24v9h12.94c-.58 2.96-2.3 5.48-4.88 7.18l7.73 6C44.3 38 46.98 31.8 46.98 24.55z"/>
+          <path fill="#FBBC05"
+            d="M10.6 28.6A14.4 14.4 0 0 1 9.8 24c0-1.6.3-3.1.8-4.6l-8-6.2A23.9 23.9 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8z"/>
+          <path fill="#34A853"
+            d="M24 48c6.5 0 12-2.1 16-5.8l-7.7-6C30.1 37.7 27.3 38.5 24 38.5c-6.2 0-11.5-4.2-13.4-9.9l-8 6.2C6.5 42.6 14.6 48 24 48z"/>
+        </svg>
+        CONTINUE WITH GOOGLE
+      </a>
+
+      <p class="register">
+        New to ELENOR?
+        <a href="/signup">Create an Account</a>
+    </p>
+
+    </section>
+
+  </main>
+
+</body>
+</html>

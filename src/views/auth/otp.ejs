@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Verify Your Email | ELENOR</title>
+
+    <link rel="stylesheet"
+          href="/css/otp.css">
+
+</head>
+
+<body>
+
+    <!-- BACKGROUND -->
+
+    <main class="otp-page">
+
+        <!-- OTP CARD -->
+
+        <div class="otp-card">
+
+            <!-- DECORATIVE TOP -->
+
+            <div class="otp-decoration">
+
+                <span></span>
+
+                <span></span>
+
+            </div>
+
+
+            <!-- HEADING -->
+
+            <div class="otp-heading">
+
+                <h1>
+                    Verify Your Email
+                </h1>
+
+                <p class="otp-description">
+
+                    We have transmitted a confidential
+                    4-digit code to your email.
+
+                </p>
+
+                <p class="otp-subdescription">
+
+                    Please enter it below to verify
+                    your account.
+
+                </p>
+
+            </div>
+
+
+            <!-- EMAIL DISPLAY -->
+
+            <div class="otp-email">
+
+                <span>
+
+                    <%= email || "your email address" %>
+
+                </span>
+
+            </div>
+
+
+            <!-- OTP FORM -->
+
+            <form
+                action="/otp"
+                method="POST"
+                id="otpForm"
+            >
+
+                <!-- OTP INPUTS -->
+
+                <div class="otp-input-container">
+
+                    <input
+                        type="text"
+                        class="otp-input"
+                        maxlength="1"
+                        inputmode="numeric"
+                        autocomplete="one-time-code"
+                        aria-label="OTP digit 1"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        class="otp-input"
+                        maxlength="1"
+                        inputmode="numeric"
+                        aria-label="OTP digit 2"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        class="otp-input"
+                        maxlength="1"
+                        inputmode="numeric"
+                        aria-label="OTP digit 3"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        class="otp-input"
+                        maxlength="1"
+                        inputmode="numeric"
+                        aria-label="OTP digit 4"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- HIDDEN OTP VALUE -->
+
+                <input
+                    type="hidden"
+                    name="otp"
+                    id="otpValue"
+                >
+
+
+                <!-- ERROR MESSAGE -->
+
+                <p
+                    class="otp-error"
+                    id="otpError"
+                    role="alert"
+                    aria-live="polite"
+                >
+
+                    <%= error || "" %>
+
+                </p>
+
+
+                <!-- VERIFY BUTTON -->
+
+                <button
+                    type="submit"
+                    class="verify-button"
+                >
+
+                    VERIFY &amp; CONTINUE
+
+                    <span>→</span>
+
+                </button>
+
+            </form>
+
+
+            <!-- RESEND OTP -->
+
+            <div class="resend-section">
+
+                <p>
+
+                    DIDN'T RECEIVE THE CODE?
+
+                    <span id="countdown">
+
+                        RESEND CODE IN
+
+                        <span id="timer">00:30</span>
+
+                    </span>
+
+                </p>
+
+
+                <form
+                    action="/resend-otp"
+                    method="POST"
+                    id="resendForm"
+                >
+
+                    <button
+                        type="submit"
+                        id="resendButton"
+                        disabled
+                    >
+
+                        RESEND OTP
+
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div class="otp-footer">
+
+                <a href="/login">
+
+                    Return to Sign In
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="/js/otp.js" defer></script>
+
+</body>
+
+</html>

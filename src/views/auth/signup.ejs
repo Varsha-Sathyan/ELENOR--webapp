@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | ELENOR</title>
+    <link rel="stylesheet" href="/css/signup.css">
+</head>
+
+<body>
+<main class="signup-page">
+    <div class="signup-container">
+
+        <!-- LEFT SIDE IMAGE -->
+        <div class="signup-visual">
+            <img
+                src="/images/signup-hero.png"
+                alt="ELENOR luxury skincare collection"
+            />
+
+            <div class="image-badge">
+                THE ELENOR EDIT · CURATED BEAUTY
+            </div>
+
+            <div class="image-caption">
+                <div>
+                    <span class="caption-label">
+                        YOUR BEAUTY RITUAL
+                    </span>
+                    <span class="caption-title">
+                        Thoughtfully curated. Beautifully yours.
+                    </span>
+                </div>
+
+                <div class="caption-right">
+                    <span>ATELIER N° 01</span>
+                    <strong>PLACE VENDÔME</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDE SIGNUP FORM -->
+        <div class="signup-form-container">
+
+            <div class="signup-eyebrow">
+                BEGIN YOUR ELENOR EXPERIENCE
+            </div>
+
+            <h1 class="signup-title">
+                Create
+                <em>Your Account</em>
+            </h1>
+
+            <p class="signup-description">
+                Join ELENOR &amp; experience beauty through
+                bespoke Parisian artisanal rituals.
+            </p>
+
+            <form
+                id="signupForm"
+                class="signup-form"
+                action="/signup"
+                method="POST"
+            >
+
+                <!-- FULL NAME -->
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+
+                <!-- EMAIL -->
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email address"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <!-- PASSWORDS -->
+                <div class="password-row">
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+
+                        <div class="password-wrapper">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Create password"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                data-target="password"
+                                aria-label="Show password"
+                            >
+                                Show
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">
+                            Confirm Password
+                        </label>
+
+                        <div class="password-wrapper">
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                placeholder="Confirm password"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                data-target="confirmPassword"
+                                aria-label="Show password"
+                            >
+                                Show
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- REFERRAL -->
+                <div class="form-group">
+                    <label for="referralId">
+                        Referral ID (Optional)
+                    </label>
+
+                    <input
+                        type="text"
+                        id="referralId"
+                        name="referralId"
+                        placeholder="Enter referral code"
+                    >
+                </div>
+
+                <!-- TERMS -->
+                <div class="terms-group">
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        name="terms"
+                        required
+                    >
+
+                    <label for="terms">
+                        I agree to the
+                        <a href="/terms">Terms &amp; Conditions</a>
+                        and
+                        <a href="/privacy">Privacy Policy</a>.
+                    </label>
+                </div>
+
+                <p
+                    id="formError"
+                    class="form-error"
+                    role="alert"
+                    aria-live="polite"
+                ></p>
+
+                <!-- SUBMIT -->
+                <button
+                    type="submit"
+                    class="create-account-btn"
+                >
+                    CREATE ACCOUNT →
+                </button>
+
+            </form>
+
+            <!-- DIVIDER -->
+            <div class="divider">OR</div>
+
+            <!-- GOOGLE SIGNUP -->
+            <button
+                type="button"
+                class="google-btn"
+                id="googleSignup"
+            >
+                <img
+                    src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                    alt=""
+                >
+                Continue with Google
+            </button>
+
+            <!-- SIGN IN -->
+            <p class="signin-link">
+                Already have an account?
+                <a href="/login">Sign In</a>
+            </p>
+
+        </div>
+
+    </div>
+</main>
+
+<script src="/js/signup.js" defer></script>
+</body>
+</html>

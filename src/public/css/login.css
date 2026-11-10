@@ -1,0 +1,469 @@
+
+:root {
+    --background: #faf8f5;
+    --black: #080808;
+    --gold: #85651f;
+    --gray: #77716e;
+    --border: #e8e3dc;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: "DM Sans", sans-serif;
+    background: var(--background);
+    color: var(--black);
+    min-height: 100vh;
+  }
+  
+  /* HEADER */
+  
+  .header {
+    height: 102px;
+    padding: 0 max(40px, calc((100vw - 1300px) / 2));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ece8e2;
+  }
+  
+  .logo {
+    text-decoration: none;
+    color: #111;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .brand {
+    font-family: "Italiana", serif;
+    font-size: 33px;
+    letter-spacing: 6px;
+    line-height: 1.1;
+  }
+  
+  .subtitle {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #77716e;
+    margin-top: 5px;
+  }
+  
+  .profile-icon {
+    background: #000;
+    color: white;
+    height: 39px;
+    width: 39px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .profile-icon svg {
+    width: 19px;
+    height: 19px;
+  }
+  
+  /* MAIN LAYOUT */
+  
+  .login-container {
+    max-width: 1300px;
+    margin: 26px auto 70px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 74px;
+    align-items: start;
+    padding: 0 15px;
+  }
+  
+  /* LEFT IMAGE */
+  
+  .image-section {
+    height: 598px;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 15px 24px rgba(0,0,0,0.10);
+    background: #d7c6b2;
+  }
+  
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .ritual-badge {
+    position: absolute;
+    top: 23px;
+    right: 23px;
+    background: #f9f6f0;
+    border-radius: 30px;
+    padding: 12px 19px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 2.3px;
+  }
+  
+  .gold-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+  
+  .image-caption {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    right: 24px;
+    background: rgba(255,255,255,0.95);
+    border: 1px solid #e9e3db;
+    border-radius: 10px;
+    padding: 23px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .caption-label {
+    font-size: 12px;
+    letter-spacing: 3px;
+    font-weight: 700;
+  }
+  
+  .image-caption h2 {
+    font-family: "Italiana", serif;
+    font-style: italic;
+    font-size: 30px;
+    font-weight: 400;
+    margin-top: 7px;
+  }
+  
+  .maison-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #e9e3db;
+    border-radius: 30px;
+    padding: 12px 15px;
+    white-space: nowrap;
+  }
+  
+  .sparkle {
+    background: #eae2d3;
+    color: var(--gold);
+    width: 29px;
+    height: 29px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+  }
+  
+  .maison-badge strong,
+  .maison-badge small {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 1.8px;
+  }
+  
+  .maison-badge small {
+    margin-top: 3px;
+  }
+  
+  /* RIGHT FORM */
+  
+  .form-section {
+    padding-top: 28px;
+  }
+  
+  .form-section h1 {
+    font-family: "Italiana", serif;
+    font-size: clamp(48px, 4.7vw, 70px);
+    font-weight: 400;
+    letter-spacing: -1.5px;
+    white-space: nowrap;
+  }
+  
+  .form-section h1 em {
+    color: var(--gold);
+    font-weight: 400;
+  }
+  
+  .description {
+    color: #85807c;
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 13px 0 34px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 9px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2.7px;
+    color: #625d59;
+  }
+  
+  .form-group input {
+    width: 100%;
+    height: 52px;
+    border: 1px solid transparent;
+    background: #fff;
+    border-radius: 6px;
+    padding: 0 18px;
+    outline: none;
+    font-family: inherit;
+    font-size: 16px;
+    color: #333;
+    transition: border-color .2s;
+  }
+  
+  .form-group input:focus {
+    border-color: var(--gold);
+  }
+  
+  .form-group input::placeholder {
+    color: #888;
+  }
+  
+  .password-wrapper {
+    position: relative;
+  }
+  
+  .password-wrapper input {
+    padding-right: 55px;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #777;
+    padding: 5px;
+  }
+  
+  .toggle-password svg {
+    width: 21px;
+    height: 21px;
+  }
+  
+  /* FORM OPTIONS */
+  
+  .form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin: 22px 0;
+  }
+  
+  .remember {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: #77716e;
+    cursor: pointer;
+  }
+  
+  .remember input {
+    width: 19px;
+    height: 19px;
+    accent-color: #000;
+    cursor: pointer;
+  }
+  
+  .forgot {
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 1.5px;
+    font-size: 13px;
+  }
+  
+  /* BUTTONS */
+  
+  .signin-btn {
+    width: 100%;
+    height: 56px;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    letter-spacing: 3px;
+    transition: background .2s, transform .2s;
+  }
+  
+  .signin-btn span {
+    font-size: 22px;
+    vertical-align: middle;
+    margin-left: 8px;
+  }
+  
+  .signin-btn:hover {
+    background: #342a19;
+    transform: translateY(-1px);
+  }
+  
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    color: #9a9490;
+    font-size: 11px;
+    letter-spacing: 3px;
+    margin: 20px 0;
+  }
+  
+  .divider::before,
+  .divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #e1dcd5;
+  }
+  
+  .google-btn {
+    width: 100%;
+    height: 53px;
+    background: white;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    text-decoration: none;
+    color: #252525;
+    font-size: 13px;
+    letter-spacing: 2px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+    transition: box-shadow .2s;
+  }
+  
+  .google-btn:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.10);
+  }
+  
+  .register {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #77716e;
+  }
+  
+  .register a {
+    color: var(--gold);
+    text-decoration: underline;
+    margin-left: 7px;
+  }
+  
+  .error-message {
+    padding: 12px;
+    background: #fff0ed;
+    border: 1px solid #e5bbb1;
+    color: #9a3228;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  
+  /* RESPONSIVE */
+  
+  @media (max-width: 1100px) {
+    .login-container {
+      gap: 35px;
+    }
+  
+    .image-section {
+      height: 550px;
+    }
+  
+    .maison-badge {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 800px) {
+    .header {
+      padding: 0 24px;
+      height: 85px;
+    }
+  
+    .login-container {
+      grid-template-columns: 1fr;
+      max-width: 550px;
+      gap: 30px;
+      margin-top: 25px;
+    }
+  
+    .image-section {
+      height: 320px;
+    }
+  
+    .form-section {
+      padding-top: 0;
+    }
+  
+    .form-section h1 {
+      font-size: 53px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .login-container {
+      padding: 0 18px;
+    }
+  
+    .image-section {
+      height: 260px;
+    }
+  
+    .image-caption {
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      padding: 14px;
+    }
+  
+    .image-caption h2 {
+      font-size: 23px;
+    }
+  
+    .ritual-badge {
+      top: 12px;
+      right: 12px;
+      font-size: 9px;
+    }
+  
+    .form-section h1 {
+      font-size: 46px;
+    }
+  
+    .description {
+      font-size: 14px;
+    }
+  
+    .forgot {
+      font-size: 11px;
+    }
+  }
+  

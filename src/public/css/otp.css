@@ -1,0 +1,590 @@
+/* =====================================
+   ELENOR OTP VERIFICATION PAGE
+===================================== */
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+/* =====================================
+   BODY
+===================================== */
+
+body {
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background-color: #f6f1eb;
+
+    color: #1c1917;
+
+}
+
+
+/* =====================================
+   PAGE BACKGROUND
+===================================== */
+
+.otp-page {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 40px 20px;
+
+    background-image:
+
+        linear-gradient(
+
+            rgba(220, 208, 192, 0.48),
+
+            rgba(220, 208, 192, 0.48)
+
+        ),
+
+        url("/images/otp-background.png");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+}
+
+
+/* =====================================
+   OTP CARD
+===================================== */
+
+.otp-card {
+
+    width: 100%;
+
+    max-width: 635px;
+
+    min-height: 590px;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    border-radius: 15px;
+
+    padding: 55px 55px 45px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    box-shadow:
+
+        0 20px 60px rgba(75, 57, 35, 0.12);
+
+}
+
+
+/* =====================================
+   DECORATIVE TOP
+===================================== */
+
+.otp-decoration {
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 30px;
+
+}
+
+
+.otp-decoration span {
+
+    width: 5px;
+
+    height: 5px;
+
+    background-color: #b99650;
+
+    border-radius: 50%;
+
+}
+
+
+/* =====================================
+   HEADING
+===================================== */
+
+.otp-heading {
+
+    text-align: center;
+
+    width: 100%;
+
+}
+
+
+/* =====================================
+   TITLE
+===================================== */
+
+.otp-heading h1 {
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: clamp(32px, 4vw, 55px);
+
+    font-weight: 400;
+
+    letter-spacing: -1.5px;
+
+    color: #1c1917;
+
+    margin-bottom: 10px;
+
+}
+
+
+/* =====================================
+   DESCRIPTION
+===================================== */
+
+.otp-description {
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+    color: #625950;
+
+}
+
+
+.otp-subdescription {
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+    color: #625950;
+
+    margin-top: 5px;
+
+}
+
+
+/* =====================================
+   EMAIL
+===================================== */
+
+.otp-email {
+
+    margin-top: 18px;
+
+    margin-bottom: 25px;
+
+    font-size: 12px;
+
+    color: #9a8052;
+
+    letter-spacing: 0.5px;
+
+}
+
+
+/* =====================================
+   OTP FORM
+===================================== */
+
+#otpForm {
+
+    width: 100%;
+
+}
+
+
+/* =====================================
+   OTP INPUT CONTAINER
+===================================== */
+
+.otp-input-container {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 24px;
+
+    margin: 0 auto 28px;
+
+}
+
+
+/* =====================================
+   OTP INPUT
+===================================== */
+
+.otp-input {
+
+    width: 62px;
+
+    height: 72px;
+
+    border: 1px solid #8b8179;
+
+    border-radius: 8px;
+
+    background-color: #ffffff;
+
+    font-size: 30px;
+
+    text-align: center;
+
+    color: #1c1917;
+
+    outline: none;
+
+    transition: all 0.25s ease;
+
+}
+
+
+/* =====================================
+   OTP INPUT FOCUS
+===================================== */
+
+.otp-input:focus {
+
+    border-color: #b99651;
+
+    box-shadow:
+
+        0 0 0 3px rgba(185, 150, 81, 0.15);
+
+}
+
+
+/* =====================================
+   OTP ERROR
+===================================== */
+
+.otp-error {
+
+    min-height: 20px;
+
+    margin-bottom: 12px;
+
+    text-align: center;
+
+    font-size: 12px;
+
+    color: #b42318;
+
+}
+
+
+/* =====================================
+   VERIFY BUTTON
+===================================== */
+
+.verify-button {
+
+    width: 100%;
+
+    height: 58px;
+
+    border: none;
+
+    border-radius: 50px;
+
+    background-color: #1c1917;
+
+    color: #ffffff;
+
+    font-size: 12px;
+
+    letter-spacing: 3px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    transition: background-color 0.3s ease;
+
+}
+
+
+/* =====================================
+   VERIFY BUTTON HOVER
+===================================== */
+
+.verify-button:hover {
+
+    background-color: #40352b;
+
+}
+
+
+/* =====================================
+   VERIFY BUTTON DISABLED
+===================================== */
+
+.verify-button:disabled {
+
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+}
+
+
+/* =====================================
+   RESEND SECTION
+===================================== */
+
+.resend-section {
+
+    width: 100%;
+
+    margin-top: 25px;
+
+    text-align: center;
+
+}
+
+
+/* =====================================
+   RESEND TEXT
+===================================== */
+
+.resend-section p {
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    line-height: 2;
+
+    color: #857a70;
+
+}
+
+
+/* =====================================
+   COUNTDOWN
+===================================== */
+
+#countdown {
+
+    display: inline-block;
+
+    margin-left: 5px;
+
+}
+
+
+#timer {
+
+    color: #9b783b;
+
+    font-weight: 500;
+
+}
+
+
+/* =====================================
+   RESEND BUTTON
+===================================== */
+
+#resendButton {
+
+    margin-top: 10px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #9b783b;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+}
+
+
+/* =====================================
+   RESEND DISABLED
+===================================== */
+
+#resendButton:disabled {
+
+    display: none;
+
+}
+
+
+/* =====================================
+   FOOTER
+===================================== */
+
+.otp-footer {
+
+    margin-top: auto;
+
+    padding-top: 35px;
+
+}
+
+
+.otp-footer a {
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    color: #8c8176;
+
+    transition: color 0.2s ease;
+
+}
+
+
+.otp-footer a:hover {
+
+    color: #1c1917;
+
+}
+
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 768px) {
+
+    .otp-card {
+
+        max-width: 500px;
+
+        padding: 45px 30px;
+
+    }
+
+    .otp-input-container {
+
+        gap: 15px;
+
+    }
+
+    .otp-input {
+
+        width: 55px;
+
+        height: 65px;
+
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .otp-page {
+
+        min-height: 100vh;
+    
+        display: flex;
+    
+        align-items: center;
+    
+        justify-content: center;
+    
+        background: #e8ddd0;
+    
+    }
+    .otp-card {
+
+        min-height: auto;
+
+        padding: 35px 20px;
+
+    }
+
+    .otp-heading h1 {
+
+        font-size: 32px;
+
+    }
+
+    .otp-description,
+    .otp-subdescription {
+
+        font-size: 12px;
+
+    }
+
+    .otp-input-container {
+
+        gap: 10px;
+
+    }
+
+    .otp-input {
+
+        width: 52px;
+
+        height: 60px;
+
+        font-size: 24px;
+
+    }
+
+    .verify-button {
+
+        height: 54px;
+
+        font-size: 10px;
+
+        letter-spacing: 2px;
+
+    }
+
+    .resend-section p {
+
+        font-size: 9px;
+
+        letter-spacing: 1px;
+
+    }
+
+}
