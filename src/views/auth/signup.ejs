@@ -1,3 +1,4 @@
+<% const fields = typeof values !== "undefined" ? values : {}; %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up | ELENOR</title>
     <link rel="stylesheet" href="/css/signup.css">
+<script src="/js/session-history.js" defer data-session-page="/signup"></script>
 </head>
 
 <body>
@@ -70,9 +72,10 @@
                     <input
                         type="text"
                         id="fullName"
-                        name="fullName"
+                        name="fullName" value="<%= fields.fullName || '' %>"
                         placeholder="Enter your full name"
                         autocomplete="name"
+                        maxlength="120"
                         required
                     >
                 </div>
@@ -83,9 +86,10 @@
                     <input
                         type="email"
                         id="email"
-                        name="email"
+                        name="email" value="<%= fields.email || '' %>"
                         placeholder="Enter your email address"
                         autocomplete="email"
+                        maxlength="254"
                         required
                     >
                 </div>
@@ -156,7 +160,8 @@
                     <input
                         type="text"
                         id="referralId"
-                        name="referralId"
+                        name="referralId" value="<%= fields.referralId || '' %>"
+                        maxlength="100"
                         placeholder="Enter referral code"
                     >
                 </div>
@@ -166,7 +171,7 @@
                     <input
                         type="checkbox"
                         id="terms"
-                        name="terms"
+                        name="terms" <%= fields.terms ? "checked" : "" %>
                         required
                     >
 
@@ -183,7 +188,7 @@
                     class="form-error"
                     role="alert"
                     aria-live="polite"
-                ></p>
+                ><%= error || "" %></p>
 
                 <!-- SUBMIT -->
                 <button
@@ -199,17 +204,13 @@
             <div class="divider">OR</div>
 
             <!-- GOOGLE SIGNUP -->
-            <button
-                type="button"
-                class="google-btn"
-                id="googleSignup"
-            >
+            <a href="/auth/google/signup" class="google-btn">
                 <img
                     src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
                     alt=""
                 >
-                Continue with Google
-            </button>
+                CONTINUE WITH GOOGLE
+            </a>
 
             <!-- SIGN IN -->
             <p class="signin-link">

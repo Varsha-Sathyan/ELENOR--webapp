@@ -135,7 +135,7 @@ const resendButton = document.getElementById("resendButton");
 
 const countdownElement = document.getElementById("countdown");
 
-let remainingTime = 30;
+let remainingTime = Number(otpForm.dataset.resendSeconds) || 0;
 
 
 // =====================================
@@ -144,7 +144,7 @@ let remainingTime = 30;
 
 function startCountdown() {
 
-    remainingTime = 30;
+    remainingTime = Number(otpForm.dataset.resendSeconds) || 0;
 
     resendButton.disabled = true;
 

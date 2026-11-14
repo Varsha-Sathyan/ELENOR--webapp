@@ -1,0 +1,28 @@
+<svg class="icon-library" xmlns="http://www.w3.org/2000/svg"><defs><symbol id="grid" viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></symbol><symbol id="users" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M2 21v-3c0-5 14-5 14 0v3H2zM17 4c5 0 5 7 0 7M19 14c3 0 3 4 3 7"/></symbol><symbol id="bag" viewBox="0 0 24 24"><path d="M5 7h14v15H5zM9 10V5a3 3 0 0 1 6 0v5"/></symbol><symbol id="tree" viewBox="0 0 24 24"><path d="M12 5v7M4 18v-6h16v6M12 12v6"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="17" width="6" height="6" rx="1"/><rect x="9" y="17" width="6" height="6" rx="1"/><rect x="17" y="17" width="6" height="6" rx="1"/></symbol><symbol id="wallet" viewBox="0 0 24 24"><path d="M20 5H3v16h17V5zM17 2H3v3M13 10h9v7h-9z"/><circle cx="17" cy="13.5" r=".6"/></symbol><symbol id="money" viewBox="0 0 24 24"><path d="M4 3h18v14H4zM1 7v14h17"/><circle cx="13" cy="10" r="4"/></symbol><symbol id="cart" viewBox="0 0 24 24"><path d="M1 2h3l3 13h13l3-9H5M8 19h.1M19 19h.1"/><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/></symbol><symbol id="exit" viewBox="0 0 24 24"><path d="M14 2h7v20h-7M16 12H1l5-5M1 12l5 5"/></symbol></defs></svg>
+<aside class="admin-sidebar">
+  <a class="admin-brand" href="/admin">ELENOR<span>BEAUTY COLLECTIONS</span></a>
+  <nav aria-label="Admin navigation">
+    <% const items = [
+      ['grid', 'DASH BOARD', '/admin', 'dashboard'],
+      ['tree', 'PRODUCTS'], ['cart', 'ORDERS'],
+      ['users', 'USERS', '/admin/users', 'users'],
+      ['tree', 'CATEGORIES'], ['tree', 'COUPONS'], ['tree', 'BANNERS'],
+      ['users', 'SALES REPORT'], ['tree', 'OFFERS']
+    ]; %>
+    <% for (const [icon, label, href, key] of items) { %>
+      <% if (href) { %>
+        <a href="<%= href %>" <%= active === key ? 'class=active aria-current=page' : '' %>>
+          <svg aria-hidden="true"><use href="#<%= icon %>"/></svg><%= label %>
+        </a>
+      <% } else { %>
+        <button disabled title="This section is not available yet">
+          <svg aria-hidden="true"><use href="#<%= icon %>"/></svg><%= label %>
+        </button>
+      <% } %>
+    <% } %>
+  </nav>
+  <form method="post" action="/admin/logout">
+    <input type="hidden" name="_csrf" value="<%= token %>">
+    <button class="logout"><svg aria-hidden="true"><use href="#exit"/></svg>LOGOUT</button>
+  </form>
+</aside>

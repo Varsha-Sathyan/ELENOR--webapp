@@ -1,0 +1,21 @@
+<div class="product-grid">
+  <% for (const product of products) { %>
+    <article class="product-card">
+      <a href="/products/<%= product.slug %>" class="product-image">
+        <img src="/images/home/<%= product.slug %>.jpg" alt="<%= product.name %>" loading="lazy" width="1254" height="1254">
+      </a>
+      <div class="product-card-copy">
+        <p class="eyebrow"><%= product.category %></p>
+        <h3><a href="/products/<%= product.slug %>"><%= product.name %></a></h3>
+        <p class="product-price"><%= money(product.price) %></p>
+        <div class="product-actions">
+          <form method="post" action="/cart/<%= product.slug %>">
+            <input type="hidden" name="_csrf" value="<%= cartToken %>">
+            <button class="shop-button" name="action" value="add">Add to Bag</button>
+          </form>
+          <a class="shop-button secondary" href="/products/<%= product.slug %>">View Details</a>
+        </div>
+      </div>
+    </article>
+  <% } %>
+</div>

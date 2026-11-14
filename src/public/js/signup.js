@@ -17,39 +17,21 @@ document.querySelectorAll(".toggle-password").forEach(button => {
     });
   });
   
-  const form = document.getElementById("signupForm");
-  
-  if (form) {
-    form.addEventListener("submit", event => {
-      const error = document.getElementById("formError");
-  
-      if (error) error.textContent = "";
-  
-      if (!form.checkValidity()) {
-        event.preventDefault();
-  
-        if (error) {
-          error.textContent =
-            "Please complete all required fields with valid information.";
-        }
-  
-        form.reportValidity();
-        return;
-      }
-  
-      const password = document.getElementById("password");
-      const confirmPassword = document.getElementById("confirmPassword");
-  
-      if (password && confirmPassword &&
-          password.value !== confirmPassword.value) {
-        event.preventDefault();
-  
-        if (error) {
-          error.textContent = "Passwords do not match.";
-        }
-  
-        confirmPassword.focus();
-      }
-    });
+const form = document.getElementById('signupForm');
+const password = document.getElementById('password');
+const confirmation = document.getElementById('confirmPassword');
+const fullName = document.getElementById('fullName');
+const email = document.getElementById('email');
+form.addEventListener('input', event => {
+  event.target.setCustomValidity?.('');
+  if (event.target === password) confirmation.setCustomValidity('');
+});
+form.addEventListener('submit', event => {
+  if (!fullName.value.trim()) fullName.setCustomValidity('Enter your full name.');
+  if (!/^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(email.value.trim())) email.setCustomValidity('Enter a valid email address.');
+  if (!password.value.trim() || new TextEncoder().encode(password.value).length > 72) {
+    password.setCustomValidity('Use a password of up to 72 bytes that is not only spaces.');
   }
-  
+  if (password.value !== confirmation.value) confirmation.setCustomValidity('Passwords do not match.');
+  if (!form.reportValidity()) event.preventDefault();
+});

@@ -11,3 +11,57 @@
         font-size:13px}a{text-decoration:none;
             color:inherit}img{display:block;
                 width:100%;object-fit:cover}.section-wrap{max-width:1180px;margin:0 auto;padding-left:30px;padding-right:30px}.site-header{height:80px;padding:0 max(30px,calc((100vw - 1120px)/2));display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0eeeb;gap:25px}.brand{font:28px 'Italiana',Georgia,serif;letter-spacing:.05em;line-height:1}.brand span{display:block;font:7px 'DM Sans',sans-serif;letter-spacing:.42em;text-align:center;margin-top:4px}.nav-links{display:flex;align-items:center;gap:30px}.nav-links a,.header-actions a{font-size:10px;letter-spacing:.14em}.nav-links a:hover,.nav-links .active{color:var(--gold)}.header-actions{display:flex;gap:19px;align-items:center;font-size:20px}.header-actions a{font-size:20px}.menu-toggle{display:none;background:none;border:0;font-size:24px;cursor:pointer}.hero{min-height:570px;display:grid;grid-template-columns:1fr 1.1fr;gap:75px;align-items:center;padding-top:55px;padding-bottom:85px}.eyebrow{color:var(--gold);font-size:10px;font-weight:700;letter-spacing:.26em;margin:0 0 12px;text-transform:uppercase}h1,h2,h3,p{margin-top:0}h1,h2,h3,.footer-logo{font-family:'Italiana',Georgia,serif;font-weight:400}h1{font-size:clamp(52px,5.5vw,85px);line-height:.98;margin-bottom:16px}h2{font-size:clamp(33px,3.2vw,49px);line-height:1.08;margin-bottom:20px}h3{font-size:24px;line-height:1.15;margin-bottom:12px}.hero-quote{font:italic 21px Georgia,serif;color:var(--gold);margin-bottom:20px}.body-copy,.section-heading>p:last-child,.centered>p:not(.eyebrow),.story-content>p:not(.eyebrow),.ritual-grid p{line-height:1.8;color:var(--muted)}.hero-copy .body-copy{max-width:385px}.hero-stats{display:flex;gap:75px;margin-top:65px}.hero-stats strong{display:block;font:26px 'Italiana',serif}.hero-stats span{font-size:9px;color:var(--muted);letter-spacing:.12em}.hero-visual{position:relative;padding:16px;background:#f2efeb;box-shadow:0 8px 18px #00000014}.hero-visual img{height:430px}.image-tag{position:absolute;bottom:28px;left:28px;padding:13px 22px;background:#fff;font-size:9px;letter-spacing:.16em}.band{background:var(--cream)}.centered{text-align:center}.intro{padding:88px 0}.intro .centered{max-width:740px}.intro .centered>p:last-child{max-width:580px;margin:0 auto}.section-space{padding-top:100px;padding-bottom:25px}.section-heading{margin-bottom:35px}.section-heading.split{display:flex;justify-content:space-between;align-items:end;gap:50px}.section-heading.split>p{max-width:390px}.story-grid,.ritual-grid,.testimonial-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:25px}.story img{height:265px}.story-content{padding:20px 8px}.story-content .eyebrow{font-size:9px}.story-content h3{margin-bottom:9px}.story-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:22px;font-size:9px;letter-spacing:.08em}.stars{color:#b7954c;letter-spacing:3px;font-size:17px}.gallery-section{padding-top:105px}.gallery-section .centered{margin-bottom:32px}.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.gallery-grid img{height:290px}.share-panel{margin-top:85px;padding:70px 20px;background:var(--cream)}.share-panel>p:not(.eyebrow){max-width:480px;margin:0 auto 22px}.pill-button{display:inline-flex;align-items:center;gap:22px;border-radius:50px;background:#080808;color:white;padding:16px 30px;font-size:10px;letter-spacing:.1em}.social-line{margin-top:24px!important;font-size:9px;color:var(--gold)!important}.ritual-grid article{background:var(--cream)}.ritual-grid img{height:260px}.ritual-grid article>div{padding:22px}.ritual-grid p{margin-bottom:0}.testimonial-grid blockquote{border:1px solid #aaa29a;margin:0;padding:25px;min-height:215px}.testimonial-grid blockquote p{font:italic 22px/1.35 Georgia,serif;margin:15px 0 25px}.testimonial-grid small{font-size:9px;letter-spacing:.1em}.testimonials{padding-bottom:100px}.follow{padding:75px 20px}.follow h2{font-size:32px}.follow strong,.follow a{display:block;margin-top:14px}.follow strong{font:22px 'Italiana',serif}.follow a{font-size:10px;letter-spacing:.2em;color:var(--gold)}.footer{background:var(--brown);color:#f3eae0;padding:65px 0 25px}.footer-top{padding-bottom:50px;border-bottom:1px solid #ffffff19}.footer-logo{font-size:43px}.footer-top p{font-size:9px;letter-spacing:.3em;margin:9px 0}.footer-top span{font-size:11px;color:#b4a79b}.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;padding:45px 0}.footer-grid h4{font-size:10px;letter-spacing:.2em}.footer-grid a{display:block;color:#c3b5a7;font-size:11px;margin:11px 0}.footer-grid a:hover{color:white}.footer-bottom{border-top:1px solid #ffffff19;padding-top:24px;display:flex;justify-content:space-between;font-size:9px;letter-spacing:.1em;color:#aa9c8f}@media(max-width:800px){.site-header{height:70px;padding:0 20px}.menu-toggle{display:block;order:3}.nav-links{display:none;position:absolute;top:70px;left:0;right:0;z-index:10;background:white;padding:24px;box-shadow:0 12px 16px #0001;flex-direction:column;align-items:start}.nav-links.open{display:flex}.header-actions{margin-left:auto}.hero{gap:25px;min-height:0;padding-top:55px;padding-bottom:65px}.hero-visual img{height:330px}.hero-stats{gap:25px;margin-top:35px}.story-grid,.ritual-grid,.testimonial-grid{gap:15px}.story img,.ritual-grid img{height:200px}.gallery-grid img{height:220px}}@media(max-width:600px){.section-wrap{padding-left:20px;padding-right:20px}.hero{grid-template-columns:1fr;gap:35px}.hero-visual img{height:340px}h1{font-size:60px}.intro{padding:65px 0}.section-space{padding-top:65px}.section-heading.split{display:block}.story-grid,.ritual-grid,.testimonial-grid{grid-template-columns:1fr;gap:25px}.story img,.ritual-grid img{height:290px}.gallery-grid{grid-template-columns:repeat(2,1fr);gap:8px}.gallery-grid img{height:210px}.share-panel{margin-top:55px;padding:55px 18px}.footer-grid{grid-template-columns:repeat(2,1fr)}.footer-bottom{flex-direction:column;gap:12px}.testimonials{padding-bottom:65px}}
+
+
+/* The campaign photograph fills the hero while the copy stays readable. */
+.home-editorial-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: clamp(530px, 62vw, 760px);
+  padding: clamp(40px, 7vw, 112px) max(24px, calc((100% - 1200px) / 2));
+  align-items: center;
+}
+.home-editorial-hero .hero-visual {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  padding: 0;
+  box-shadow: none;
+}
+.home-editorial-hero .hero-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% center;
+}
+.home-editorial-hero .hero-copy {
+  width: min(100%, 495px);
+  padding: clamp(24px, 3.5vw, 54px);
+  background: #faf7f1f5;
+}
+.home-editorial-hero h1 {
+  font-size: clamp(36px, 4.4vw, 60px);
+}
+.home-editorial-hero .hero-stats {
+  flex-wrap: wrap;
+  gap: 18px 30px;
+  margin-top: 28px;
+}
+@media (max-width: 680px) {
+  .home-editorial-hero {
+    flex-direction: column;
+    min-height: 0;
+    gap: 0;
+    padding: 0;
+    background: #faf7f1;
+  }
+  .home-editorial-hero .hero-visual {
+    position: relative;
+    z-index: auto;
+    order: -1;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+  .home-editorial-hero .hero-visual img { object-position: 76% center; }
+}

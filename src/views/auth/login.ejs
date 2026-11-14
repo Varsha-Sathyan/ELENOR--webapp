@@ -13,6 +13,7 @@
 
   <link rel="stylesheet" href="/css/login.css">
   <script src="/js/login.js" defer></script>
+<script src="/js/session-history.js" defer data-session-page="/login"></script>
 </head>
 
 <body>
@@ -87,6 +88,8 @@
             type="email"
             id="email"
             name="email"
+            value="<%= typeof emailValue === 'string' ? emailValue : '' %>"
+            maxlength="254"
             placeholder="camille.devalois@haute.fr"
             autocomplete="email"
             required

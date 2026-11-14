@@ -257,11 +257,16 @@ body {
   text-decoration: underline;
 }
 
-.create-account-btn {
+.create-account-btn,
+.google-btn {
   width: 100%;
   min-height: 43px;
-  border: none;
+  box-sizing: border-box;
   border-radius: 25px;
+}
+
+.create-account-btn {
+  border: none;
   background: #211d1a;
   color: white;
   text-transform: uppercase;
@@ -294,10 +299,12 @@ body {
 }
 
 .google-btn {
-  width: 100%;
-  min-height: 39px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
   border: 1px solid #ddd7d2;
-  border-radius: 24px;
   background: #fff;
   font-family: inherit;
   font-size: 13px;
@@ -313,8 +320,6 @@ body {
 .google-btn img {
   width: 17px;
   height: 17px;
-  vertical-align: middle;
-  margin-right: 8px;
 }
 
 .signin-link {

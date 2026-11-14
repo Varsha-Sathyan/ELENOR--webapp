@@ -22,24 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
   
-    // Form validation
-    loginForm.addEventListener("submit", (event) => {
-      const emailValue = email.value.trim();
-      const passwordValue = password.value;
-  
-      if (!emailValue || !passwordValue) {
-        event.preventDefault();
-        alert("Please enter your email and password.");
-        return;
-      }
-  
-      if (!email.validity.valid) {
-        event.preventDefault();
-        alert("Please enter a valid email address.");
-        return;
-      }
-  
-      // The Express backend handles authentication.
+    loginForm.addEventListener('input', event => event.target.setCustomValidity?.(''));
+    loginForm.addEventListener('submit', event => {
+      if (!/^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(email.value.trim())) email.setCustomValidity('Enter a valid email address.');
+      if (new TextEncoder().encode(password.value).length > 72) password.setCustomValidity('Enter a password of up to 72 bytes.');
+      if (!loginForm.reportValidity()) event.preventDefault();
     });
-  });
-  
+});

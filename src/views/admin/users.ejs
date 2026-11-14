@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>User Management | ELENOR</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/admin-users.css">
+</head>
+<body>
+  <%- include('sidebar', { active: 'users' }) %>
+  <main class="admin-main users-main">
+    <header class="users-heading">
+      <div><p class="users-kicker">TEAM</p><h1>User <span>Management</span></h1></div>
+      <div class="customer-total"><strong><%= totalUsers.toLocaleString('en-IN') %></strong><span>Total customers</span></div>
+    </header>
+    <section class="users-panel" aria-label="Customers">
+      <div class="users-toolbar">
+        <form class="users-search" method="get" action="/admin/users" role="search">
+          <label for="user-search" aria-label="Search users">⌕</label>
+          <input id="user-search" type="search" name="q" value="<%= options.q %>" maxlength="120" placeholder="Search users" aria-label="Search users by name or email">
+          <input type="hidden" name="status" value="<%= options.status %>">
+          <input type="hidden" name="sort" value="<%= options.sort %>">
+          <button type="submit">Search</button>
+        </form>
+        <div class="users-tools">
+          <details class="users-menu"><summary>Filter</summary><div>
+            <% for (const [status, label] of [['all', 'All Users'], ['active', 'Active'], ['inactive', 'Inactive']]) { %>
+              <a href="<%= url({ status, page: 1 }) %>" <%= options.status === status ? 'aria-current=true' : '' %>><%= label %></a>
+            <% } %>
+          </div></details>
+          <details class="users-menu"><summary>Sort</summary><div>
+            <% for (const [sort, label] of [['alphabetical', 'Alphabetical (A–Z)'], ['latest', 'Latest'], ['oldest', 'Oldest']]) { %>
+              <a href="<%= url({ sort, page: 1 }) %>" <%= options.sort === sort ? 'aria-current=true' : '' %>><%= label %></a>
+            <% } %>
+          </div></details>
+        </div>
+      </div>
+      <nav class="users-tabs" aria-label="Filter by status">
+        <% for (const [status, label] of [['all', 'All Users'], ['active', 'Active'], ['inactive', 'Inactive']]) { %>
+          <a href="<%= url({ status, page: 1 }) %>" <%= options.status === status ? 'aria-current=page' : '' %>><%= label %></a>
+        <% } %>
+      </nav>
+      <div class="users-table-scroll">
+        <table class="users-table">
+          <thead><tr><th scope="col">Customer</th><th scope="col">Email</th><th scope="col">Joined on</th><th scope="col">Orders</th><th scope="col">Status</th><th scope="col">Actions</th></tr></thead>
+          <tbody>
+            <% for (const user of users) { %>
+              <tr>
+                <th scope="row"><div class="customer-cell"><span class="customer-avatar" aria-hidden="true"><%= (user.fullName || '?').trim().split(/\s+/).slice(0, 2).map(word => word.charAt(0)).join('').toUpperCase() %></span><div><strong><%= user.fullName || 'Unnamed customer' %></strong><small>Customer</small></div></div></th>
+                <td><%= user.email %></td>
+                <td><%= user.createdAt ? new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'Asia/Kolkata' }).format(user.createdAt) : '—' %></td>
+                <td title="Order tracking is unavailable">—</td>
+                <td><span class="user-status <%= user.isBlocked ? 'blocked' : '' %>"><%= user.isBlocked ? 'Blocked' : 'Active' %></span></td>
+                <td><form method="post" action="<%= url().replace('/admin/users?', '/admin/users/' + user._id + '/access?') %>"><input type="hidden" name="_csrf" value="<%= token %>"><button class="access-button <%= user.isBlocked ? 'unblock' : '' %>" name="action" value="<%= user.isBlocked ? 'unblock' : 'block' %>" aria-label="<%= user.isBlocked ? 'Unblock' : 'Block access for' %> <%= user.fullName %>"><%= user.isBlocked ? 'Unblock' : 'Block Access' %></button></form></td>
+              </tr>
+            <% } %>
+            <% if (!users.length) { %><tr><td class="users-empty" colspan="6">No customers match your search or filter.</td></tr><% } %>
+          </tbody>
+        </table>
+      </div>
+      <footer class="users-pagination">
+        <span><%= resultCount ? `Showing ${offset + 1}–${offset + users.length} of ${resultCount.toLocaleString('en-IN')} results` : '0 results' %></span>
+        <% if (pageCount > 1) { %><nav aria-label="Customer pages">
+          <% if (options.page > 1) { %><a href="<%= url({ page: options.page - 1 }) %>" aria-label="Previous page">‹</a><% } %>
+          <% const firstPage = Math.max(1, options.page - 1); const lastPage = Math.min(pageCount, options.page + 1); %>
+          <% if (firstPage > 1) { %><a href="<%= url({ page: 1 }) %>">1</a><% } %>
+          <% if (firstPage > 2) { %><span>…</span><% } %>
+          <% for (let page = firstPage; page <= lastPage; page++) { %><a href="<%= url({ page }) %>" <%= options.page === page ? 'aria-current=page' : '' %>><%= page %></a><% } %>
+          <% if (lastPage < pageCount - 1) { %><span>…</span><% } %>
+          <% if (lastPage < pageCount) { %><a href="<%= url({ page: pageCount }) %>"><%= pageCount %></a><% } %>
+          <% if (options.page < pageCount) { %><a href="<%= url({ page: options.page + 1 }) %>" aria-label="Next page">›</a><% } %>
+        </nav><% } %>
+      </footer>
+    </section>
+  </main>
+</body>
+</html>

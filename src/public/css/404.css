@@ -1,0 +1,59 @@
+.not-found-page .account-header {
+  height: 112px;
+  border-bottom: 1px solid #d8d3cc;
+}
+
+.not-found {
+  display: grid;
+  place-items: center;
+  min-height: max(630px, calc(100svh - 112px));
+  padding: 64px 24px 88px;
+  background: #f7f7f7;
+  color: #191c1b;
+  text-align: center;
+}
+
+.not-found-code {
+  margin: 0 0 24px;
+  font-size: clamp(104px, 14vw, 176px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -.055em;
+}
+
+.not-found h1 {
+  margin: 0;
+  color: #090a0a;
+  font-size: clamp(20px, 3vw, 26px);
+  text-transform: uppercase;
+}
+
+.not-found-copy {
+  max-width: 430px;
+  margin: 28px auto 40px;
+  color: #514b4a;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.not-found-home {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0 40px;
+  background: #191c1b;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.not-found-home:hover { background: #3a3d3b; }
+
+@media (max-width: 700px) {
+  .not-found-page .account-header { height: auto; }
+  .not-found { min-height: 65svh; padding-block: 50px; }
+  .not-found-copy { font-size: 16px; }
+}

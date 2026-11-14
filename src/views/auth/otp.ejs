@@ -13,6 +13,7 @@
     <link rel="stylesheet"
           href="/css/otp.css">
 
+<script src="/js/session-history.js" defer data-session-page="/verify-otp"></script>
 </head>
 
 <body>
@@ -46,8 +47,8 @@
 
                 <p class="otp-description">
 
-                    We have transmitted a confidential
-                    4-digit code to your email.
+                    <%= codeSent ? "Check your email for the" : "Email delivery is pending. Once a code is sent, enter the" %>
+                    4-digit verification code.
 
                 </p>
 
@@ -77,9 +78,9 @@
             <!-- OTP FORM -->
 
             <form
-                action="/otp"
+                action="/verify-otp"
                 method="POST"
-                id="otpForm"
+                id="otpForm" data-resend-seconds="<%= resendSeconds %>"
             >
 
                 <!-- OTP INPUTS -->

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page Not Found | ELENOR</title>
+  <link rel="stylesheet" href="/css/account.css">
+  <link rel="stylesheet" href="/css/404.css">
+</head>
+<body class="not-found-page">
+  <header class="account-header">
+    <a class="wordmark" href="/">ELENOR<small>A HOUSE OF BEAUTY</small></a>
+    <nav aria-label="Main navigation">
+      <a href="/">HOME</a>
+      <a href="/home#community">OUR SIGNATURE</a>
+    </nav>
+    <a class="account-link" href="<%= accountUrl %>"><%= signedIn ? 'MY ACCOUNT' : 'SIGN IN' %></a>
+  </header>
+  <main class="not-found" aria-labelledby="not-found-title">
+    <div class="not-found-content">
+      <p class="not-found-code" aria-hidden="true">404</p>
+      <h1 id="not-found-title">Page Not Found</h1>
+      <p class="not-found-copy">The page you’re looking for seems to have wandered off. Let’s get you back on track.</p>
+      <a class="not-found-home" href="/">Back to Home</a>
+    </div>
+  </main>
+</body>
+</html>

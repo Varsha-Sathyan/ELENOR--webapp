@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %> | ELENOR</title>
+  <link rel="stylesheet" href="/css/home.css">
+  <link rel="stylesheet" href="/css/shop.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">ELENOR<span>SKINCARE</span></a>
+    <div class="shop-navigation"><a href="/products">Products</a><a href="/cart">Shopping Bag</a></div>
+  </header>
+  <main class="section-wrap shop-page">
+    <% if (page === 'products') { %>
+      <h1><%= title %></h1>
+      <%- include('product-cards') %>
+    <% } else if (page === 'product') { %>
+      <a class="shop-back" href="/products">← All products</a>
+      <article class="product-detail">
+        <img src="/images/home/<%= product.slug %>.jpg" alt="<%= product.name %>" width="1254" height="1254">
+        <div>
+          <p class="eyebrow"><%= product.category %></p>
+          <h1><%= product.name %></h1>
+          <p class="product-price"><%= money(product.price) %></p>
+          <p><%= product.description %></p>
+          <form method="post" action="/cart/<%= product.slug %>">
+            <input type="hidden" name="_csrf" value="<%= cartToken %>">
+            <button class="shop-button" name="action" value="add">Add to Bag</button>
+          </form>
+        </div>
+      </article>
+    <% } else { %>
+      <h1><%= title %></h1>
+      <% if (lines.length) { %>
+        <ul class="bag-list">
+          <% for (const { product, quantity } of lines) { %>
+            <li>
+              <a href="/products/<%= product.slug %>"><img src="/images/home/<%= product.slug %>.jpg" alt="" width="80" height="80"></a>
+              <div><a href="/products/<%= product.slug %>"><strong><%= product.name %></strong></a><p>Quantity <%= quantity %> · <%= money(product.price * quantity) %></p></div>
+              <form method="post" action="/cart/<%= product.slug %>">
+                <input type="hidden" name="_csrf" value="<%= cartToken %>">
+                <button class="shop-button secondary" name="action" value="remove">Remove</button>
+              </form>
+            </li>
+          <% } %>
+        </ul>
+        <p class="bag-subtotal"><strong>Subtotal <%= money(subtotal) %></strong></p>
+        <p>Checkout is currently unavailable.</p>
+      <% } else { %>
+        <p>Your shopping bag is empty.</p>
+      <% } %>
+      <a class="shop-button" href="/products">Continue Shopping</a>
+    <% } %>
+  </main>
+</body>
+</html>
