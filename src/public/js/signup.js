@@ -27,8 +27,10 @@ form.addEventListener('input', event => {
   if (event.target === password) confirmation.setCustomValidity('');
 });
 form.addEventListener('submit', event => {
-  if (!fullName.value.trim()) fullName.setCustomValidity('Enter your full name.');
-  if (!/^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(email.value.trim())) email.setCustomValidity('Enter a valid email address.');
+  if (!/^\p{L}[\p{L}\p{M}]*(?: +\p{L}[\p{L}\p{M}]*)*$/u.test(fullName.value.trim())) {
+    fullName.setCustomValidity('Enter your full name using letters and spaces only.');
+  }
+  if (!/^[^\s@.]+(?:\.[^\s@.]+)*@[^\s@.]+(?:\.[^\s@.]+)+$/.test(email.value.trim())) email.setCustomValidity('Enter a valid email address.');
   if (!password.value.trim() || new TextEncoder().encode(password.value).length > 72) {
     password.setCustomValidity('Use a password of up to 72 bytes that is not only spaces.');
   }

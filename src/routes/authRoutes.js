@@ -46,7 +46,9 @@ router.post('/signup', async (req, res, next) => {
       referralId: typeof referralId === 'string' ? referralId : '', terms: terms === 'on'
     } });
     const normalizedEmail = normalizeEmail(email);
-    if (typeof fullName !== 'string' || !fullName.trim() || fullName.length > 120 || /[\x00-\x1f\x7f]/.test(fullName)) return fail('Enter your full name (up to 120 characters).');
+    if (typeof fullName !== 'string' || fullName.length > 120 || !/^\p{L}[\p{L}\p{M}]*(?: +\p{L}[\p{L}\p{M}]*)*$/u.test(fullName.trim())) {
+      return fail('Enter your full name using letters and spaces only (up to 120 characters).');
+    }
     if (!normalizedEmail) return fail('Enter a valid email address.');
     if (!validPassword(password)) return fail('Enter a password of at least 8 characters and at most 72 bytes. It cannot be only spaces.');
     if (password !== confirmPassword) return fail('Passwords do not match.');
@@ -121,13 +123,17 @@ router.post('/login', async (req, res, next) => {
   try {
     const { email, password } = req.body || {};
     const normalizedEmail = normalizeEmail(email);
-    const fail = (status, error) => res.status(status).render('auth/login', { error, emailValue: typeof email === 'string' ? email.slice(0, 254) : '' });
+    const wantsJson = req.get('Accept') === 'application/json';
+    const fail = (status, error) => wantsJson
+      ? res.status(status).json({ error })
+      : res.status(status).render('auth/login', { error, emailValue: typeof email === 'string' ? email.slice(0, 254) : '' });
     if (!normalizedEmail) return fail(400, 'Enter a valid email address.');
     if (typeof password !== 'string' || !password.length || Buffer.byteLength(password) > 72) return fail(400, 'Enter your password (up to 72 bytes).');
     const user = await User.findOne({ email: normalizedEmail }).select('+password');
     if (!user?.password || !user.emailVerified || user.isBlocked || !(await bcrypt.compare(password, user.password))) return fail(401, 'Invalid email or password. If you signed up with Google, use Continue with Google.');
     await signIn(req, user);
-    res.redirect('/home');
+    if (wantsJson) return res.json({ signedIn: true });
+    res.redirect(303, '/home');
   } catch (err) { next(err); }
 });
 

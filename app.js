@@ -153,6 +153,7 @@ app.use("/", require("./src/routes/userRoutes"));
 // When user opens the website
 
 app.get("/", (req, res) => {
+    res.set("Cache-Control", "no-store");
 
     // If user is already logged in
 
@@ -165,7 +166,7 @@ app.get("/", (req, res) => {
 
     // If user is not logged in
 
-    return res.redirect("/signup");
+    return res.redirect("/login");
 
 });
 
