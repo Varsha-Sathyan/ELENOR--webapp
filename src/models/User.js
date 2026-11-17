@@ -8,8 +8,10 @@ const userSchema = new mongoose.Schema({
   phone: { type: String, default: '' },
   avatar: { type: String, default: '' },
   referralId: { type: String, default: '' },
+  referredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', index: true },
   emailVerified: { type: Boolean, default: false },
-  isBlocked: { type: Boolean, default: false }
+  isBlocked: { type: Boolean, default: false },
+  sessionVersion: { type: Number, default: 0 }
 }, { timestamps: true });
 
 module.exports = mongoose.models.User || mongoose.model('User', userSchema);

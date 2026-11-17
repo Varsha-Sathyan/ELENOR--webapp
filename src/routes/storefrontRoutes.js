@@ -3,6 +3,10 @@ const { randomBytes } = require('node:crypto');
 const requireLogin = require('../middleware/requireLogin');
 
 const router = express.Router();
+router.use(['/products', '/cart'], (req, res, next) => {
+  if (req.session.userId) return requireLogin(req, res, next);
+  next();
+});
 const products = [
   { slug: 'radiance-serum', name: 'Radiance Serum', category: 'Botanical Elixir', price: 2400,
     description: 'A lightweight botanical serum for your daily beauty ritual.' },
@@ -16,6 +20,7 @@ const price = new Intl.NumberFormat('en-IN', {
 });
 
 function storefront(req, res, next) {
+  res.locals.signedIn = Boolean(req.session.userId);
   req.session.cartToken ||= randomBytes(32).toString('hex');
   res.set('Cache-Control', 'no-store');
   res.locals.products = products;

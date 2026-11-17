@@ -102,11 +102,9 @@ if (!process.env.SESSION_SECRET) {
 
 // Configure session
 
-app.use(
-    session({
-
-        name: "elenor.sid",
-
+function createSession(name, path) {
+    return session({
+        name,
         secret: process.env.SESSION_SECRET,
 
         resave: false,
@@ -114,7 +112,7 @@ app.use(
         saveUninitialized: false,
 
         cookie: {
-
+            path,
             httpOnly: true,
 
             sameSite: "lax",
@@ -126,8 +124,11 @@ app.use(
 
         }
 
-    })
-);
+    });
+}
+
+app.use("/admin", createSession("elenor.admin.sid", "/admin"), require("./src/routes/adminRoutes"));
+app.use(createSession("elenor.sid", "/"));
 
 
 // =====================================
@@ -188,7 +189,6 @@ app.use(require("./src/routes/storefrontRoutes"));
 // Add your admin authentication middleware
 // before this route.
 
-app.use("/admin", require("./src/routes/adminRoutes"));
 
 
 // =====================================

@@ -4,7 +4,12 @@ const User = require('../models/User');
 const requireAdmin = require('../middleware/requireAdmin');
 const hash = value => crypto.createHash('sha256').update(value).digest();
 const attempts = new Map();
-router.get('/login', (req, res) => req.session.isAdmin ? res.redirect('/admin') : res.render('admin/login', {error:null}));
+router.use('/login', (req, res, next) => {
+  res.set('Cache-Control', 'no-store');
+  if (req.session.isAdmin) return res.redirect(303, '/admin');
+  next();
+});
+router.get('/login', (req, res) => res.render('admin/login', {error:null}));
 router.post('/login', async (req, res, next) => {
   try {
     const key = req.ip;
@@ -22,7 +27,7 @@ router.post('/login', async (req, res, next) => {
     await new Promise((resolve,reject)=>req.session.regenerate(err=>err?reject(err):resolve()));
     req.session.isAdmin=true;
     req.session.adminToken=crypto.randomBytes(32).toString('hex');
-    req.session.save(err=>err?next(err):res.redirect('/admin'));
+    req.session.save(err=>err?next(err):res.redirect(303, '/admin'));
   }catch(err){next(err);}
 });
 router.use(requireAdmin);
@@ -73,7 +78,10 @@ router.post('/users/:id/access', async (req, res, next) => {
   try {
     if (!req.session.adminToken || req.body._csrf !== req.session.adminToken) return res.sendStatus(403);
     if (!/^[0-9a-f]{24}$/i.test(req.params.id) || !['block', 'unblock'].includes(req.body.action)) return res.sendStatus(400);
-    const result = await User.updateOne({ _id: req.params.id }, { $set: { isBlocked: req.body.action === 'block' } });
+    const blocking = req.body.action === 'block';
+    const update = { $set: { isBlocked: blocking } };
+    if (blocking) update.$inc = { sessionVersion: 1 };
+    const result = await User.updateOne({ _id: req.params.id }, update);
     if (!result.matchedCount) return next();
     res.redirect(303, userListUrl(userListOptions(req.query)));
   } catch (error) { next(error); }
@@ -84,6 +92,6 @@ router.get(['/', '/dashboard'],async(req,res,next)=>{
 });
 router.post('/logout',(req,res,next)=>{
   if(req.body._csrf !== req.session.adminToken || !req.session.adminToken) return res.status(403).send('Please reload the dashboard and try again.');
-  req.session.destroy(err=>{if(err)return next(err);res.clearCookie('elenor.sid');res.redirect('/admin/login');});
+  req.session.destroy(err=>{if(err)return next(err);res.clearCookie('elenor.admin.sid', { path: '/admin' });res.redirect('/admin/login');});
 });
 module.exports=router;

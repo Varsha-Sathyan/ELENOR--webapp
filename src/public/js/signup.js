@@ -22,6 +22,16 @@ const password = document.getElementById('password');
 const confirmation = document.getElementById('confirmPassword');
 const fullName = document.getElementById('fullName');
 const email = document.getElementById('email');
+const referralInput = document.getElementById('referralId');
+const googleSignup = document.querySelector('.google-btn[href^="/auth/google/signup"]');
+referralInput?.addEventListener('input', () => {
+  if (!googleSignup) return;
+  const url = new URL(googleSignup.href);
+  const code = referralInput.value.trim();
+  if (code) url.searchParams.set('ref', code);
+  else url.searchParams.delete('ref');
+  googleSignup.href = url.href;
+});
 form.addEventListener('input', event => {
   event.target.setCustomValidity?.('');
   if (event.target === password) confirmation.setCustomValidity('');

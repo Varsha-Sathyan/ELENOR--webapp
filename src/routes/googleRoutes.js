@@ -3,6 +3,7 @@ const { createHash, randomBytes } = require('node:crypto');
 const { OAuth2Client } = require('google-auth-library');
 const User = require('../models/User');
 const { normalizeEmail } = require('../services/authValidation');
+const { resolveReferral } = require('../services/referrals');
 
 const router = express.Router();
 const randomToken = () => randomBytes(32).toString('base64url');
@@ -25,7 +26,8 @@ function startGoogle(mode) {
     const state = randomToken();
     const nonce = randomToken();
     const verifier = randomToken();
-    req.session.googleFlow = { state, nonce, verifier, mode, expiresAt: Date.now() + 10 * 60 * 1000 };
+    const referral = mode === 'signup' ? req.query.ref : undefined;
+    req.session.googleFlow = { state, nonce, verifier, mode, referral, expiresAt: Date.now() + 10 * 60 * 1000 };
     const url = client.generateAuthUrl({
       response_type: 'code',
       prompt: 'select_account',
@@ -75,8 +77,11 @@ router.get('/auth/google/callback', async (req, res, next) => {
       if (await User.exists({ email })) {
         return renderError(res, mode, 409, 'An account already uses this email. Sign in with the method you originally used.');
       }
+      const referral = await resolveReferral(flow.referral, email);
+      if (!referral) return renderError(res, mode, 400, 'Enter a valid referral code or leave it blank.');
       try {
         user = await User.create({
+          ...referral,
           googleSubject: identity.sub,
           email,
           fullName: typeof identity.name === 'string' && identity.name.trim()
@@ -89,10 +94,12 @@ router.get('/auth/google/callback', async (req, res, next) => {
         if (!user) return renderError(res, mode, 409, 'An account already uses this email. Sign in with the method you originally used.');
       }
     }
-    if (user.isBlocked || !user.emailVerified) return renderError(res, mode, 403, 'This account cannot sign in.');
+    if (user.isBlocked) return renderError(res, mode, 403, 'Your access has been denied by an admin. You can sign in when your account is unblocked.');
+    if (!user.emailVerified) return renderError(res, mode, 403, 'This account cannot sign in.');
     const cart = req.session.cart;
     await new Promise((resolve, reject) => req.session.regenerate(error => error ? reject(error) : resolve()));
     req.session.userId = user.id;
+    req.session.sessionVersion = user.sessionVersion ?? 0;
     if (cart) req.session.cart = cart;
     req.session.save(error => error ? next(error) : res.redirect('/home'));
   } catch (error) { next(error); }

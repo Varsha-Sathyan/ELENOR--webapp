@@ -2,6 +2,7 @@ const router = require('express').Router();
 const crypto = require('node:crypto');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const { referralCode } = require('../services/referrals');
 router.use(['/profile', '/edit-profile', '/logout'], require('../middleware/requireLogin'));
 router.use(['/profile', '/edit-profile', '/logout'], async (req, res, next) => {
   try {
@@ -19,7 +20,12 @@ router.use(['/profile', '/edit-profile', '/logout'], async (req, res, next) => {
     next();
   } catch (err) { next(err); }
 });
-router.get('/profile', (req, res) => res.render('user/profile'));
+router.get('/profile', async (req, res, next) => {
+  try {
+    const successfulReferrals = await User.countDocuments({ referredBy: req.account.id, emailVerified: true });
+    res.render('user/profile', { code: referralCode(req.account.id), successfulReferrals });
+  } catch (error) { next(error); }
+});
 router.get(['/profile/edit', '/edit-profile'], (req, res) => res.render('user/editProfile'));
 router.use(['/profile', '/edit-profile', '/logout'], (req, res, next) => {
   if (req.method === 'POST' && (typeof req.body._csrf !== 'string' || req.body._csrf !== req.session.profileToken)) return res.status(403).send('Please reload your account page and try again.');
@@ -53,9 +59,11 @@ router.post('/profile/password', async (req, res, next) => {
     user.password = await bcrypt.hash(newPassword, 12);
     await user.save();
     const id = user.id;
+    const version = req.session.sessionVersion ?? 0;
     req.session.regenerate(err => {
       if (err) return next(err);
       req.session.userId = id;
+      req.session.sessionVersion = version;
       req.session.profileNotice = 'Your password has been updated.';
       req.session.save(err => err ? next(err) : res.redirect('/profile/edit'));
     });

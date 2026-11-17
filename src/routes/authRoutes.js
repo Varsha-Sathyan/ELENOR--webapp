@@ -4,7 +4,11 @@ const crypto = require('node:crypto');
 const User = require('../models/User');
 const sendOtpEmail = require('../services/otpEmail');
 const router = express.Router();
+const requireLogin = require('../middleware/requireLogin');
+const blockedMessage = 'Your access has been denied by an admin. You can sign in when your account is unblocked.';
+router.get('/auth/session', requireLogin, (req, res) => res.sendStatus(204));
 const { normalizeEmail, validPassword } = require('../services/authValidation');
+const { resolveReferral } = require('../services/referrals');
 router.use(['/login', '/signup', '/otp', '/verify-otp', '/resend-otp', '/auth/google'], (req, res, next) => {
   res.set('Cache-Control', 'no-store');
   if (req.session.userId) return res.redirect(303, '/home');
@@ -17,6 +21,7 @@ async function signIn(req, user) {
   const cart = req.session.cart;
   await new Promise((resolve, reject) => req.session.regenerate(err => err ? reject(err) : resolve()));
   req.session.userId = user.id;
+  req.session.sessionVersion = user.sessionVersion ?? 0;
   if (cart) req.session.cart = cart;
   await saveSession(req);
 }
@@ -34,8 +39,11 @@ async function issueOtp(pending) {
   pending.expiresAt = Date.now() + 5 * 60 * 1000;
   pending.resendAfter = Date.now() + 30000;
 }
-router.get('/signup', (req, res) => res.render('auth/signup', { error: null }));
-router.get('/login', (req, res) => res.render('auth/login', { error: null }));
+router.get('/signup', (req, res) => res.render('auth/signup', {
+  error: null,
+  values: { referralId: typeof req.query.ref === 'string' ? req.query.ref.slice(0, 100) : '' }
+}));
+router.get('/login', (req, res) => res.render('auth/login', { error: req.query.blocked === '1' ? blockedMessage : null }));
 
 router.post('/signup', async (req, res, next) => {
   try {
@@ -53,11 +61,12 @@ router.post('/signup', async (req, res, next) => {
     if (!validPassword(password)) return fail('Enter a password of at least 8 characters and at most 72 bytes. It cannot be only spaces.');
     if (password !== confirmPassword) return fail('Passwords do not match.');
     if (terms !== 'on') return fail('Please accept the terms and conditions.');
-    if (referralId !== undefined && (typeof referralId !== 'string' || referralId.trim().length > 100)) return fail('Referral codes must be 100 characters or fewer.');
+    const referral = await resolveReferral(referralId, normalizedEmail);
+    if (!referral) return fail('Enter a valid referral code or leave it blank.');
     if (await User.exists({ email: normalizedEmail })) return fail('An account with this email already exists. Please sign in.');
     if (req.session.pendingSignup?.resendAfter > Date.now()) return fail('Please wait 30 seconds before requesting another code.');
     const pending = { fullName: fullName.trim(), email: normalizedEmail,
-      password: await bcrypt.hash(password, 12), referralId: typeof referralId === 'string' ? referralId.trim().slice(0, 100) : '', attempts: 0 };
+      password: await bcrypt.hash(password, 12), ...referral, attempts: 0 };
     req.session.pendingSignup = pending;
     await saveSession(req);
     try {
@@ -89,7 +98,7 @@ router.post(['/verify-otp', '/otp'], async (req, res, next) => {
       await saveSession(req);
       return renderOtp(req, res, 'Incorrect code. Please enter your four-digit OTP.', 400);
     }
-    const user = await User.create({ fullName: pending.fullName, email: pending.email, password: pending.password, referralId: pending.referralId, emailVerified: true });
+    const user = await User.create({ fullName: pending.fullName, email: pending.email, password: pending.password, referralId: pending.referralId, referredBy: pending.referredBy, emailVerified: true });
     await signIn(req, user);
     res.redirect(303, '/home');
   } catch (err) {
@@ -130,7 +139,8 @@ router.post('/login', async (req, res, next) => {
     if (!normalizedEmail) return fail(400, 'Enter a valid email address.');
     if (typeof password !== 'string' || !password.length || Buffer.byteLength(password) > 72) return fail(400, 'Enter your password (up to 72 bytes).');
     const user = await User.findOne({ email: normalizedEmail }).select('+password');
-    if (!user?.password || !user.emailVerified || user.isBlocked || !(await bcrypt.compare(password, user.password))) return fail(401, 'Invalid email or password. If you signed up with Google, use Continue with Google.');
+    if (!user?.password || !user.emailVerified || !(await bcrypt.compare(password, user.password))) return fail(401, 'Invalid email or password. If you signed up with Google, use Continue with Google.');
+    if (user.isBlocked) return fail(403, blockedMessage);
     await signIn(req, user);
     if (wantsJson) return res.json({ signedIn: true });
     res.redirect(303, '/home');

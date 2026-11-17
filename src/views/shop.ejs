@@ -6,6 +6,7 @@
   <title><%= title %> | ELENOR</title>
   <link rel="stylesheet" href="/css/home.css">
   <link rel="stylesheet" href="/css/shop.css">
+  <% if (signedIn) { %><script src="/js/session-history.js" defer data-watch-customer-session></script><% } %>
 </head>
 <body>
   <header class="site-header">

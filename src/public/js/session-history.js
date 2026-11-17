@@ -1,7 +1,30 @@
 // A browser can restore a page from history without making a new request.
 // Reopen it with GET so the server can check the current session.
 const sessionPage = document.currentScript.dataset.sessionPage;
-const isAuthPage = ['/login', '/signup', '/verify-otp'].includes(sessionPage);
+const isAuthPage = ['/login', '/signup', '/verify-otp', '/admin/login'].includes(sessionPage);
+const watchCustomerSession = sessionPage === '/home' || document.currentScript.hasAttribute('data-watch-customer-session');
+
+if (watchCustomerSession) {
+  let checking = false;
+  async function checkCustomerSession() {
+    if (checking || document.hidden) return;
+    checking = true;
+    try {
+      const { status } = await fetch('/auth/session', { cache: 'no-store' });
+      if (status === 401 || status === 403) {
+        clearInterval(sessionTimer);
+        window.location.replace(status === 403 ? '/login?blocked=1' : '/login');
+      }
+    } catch {
+      // Retry on the next check if the connection drops.
+    } finally {
+      checking = false;
+    }
+  }
+  const sessionTimer = setInterval(checkCustomerSession, 2000);
+  document.addEventListener('visibilitychange', checkCustomerSession);
+  checkCustomerSession();
+}
 
 // Use one Home entry as a buffer. Only handle traversal to that entry,
 // so Back still works between Home, products, and the account pages.

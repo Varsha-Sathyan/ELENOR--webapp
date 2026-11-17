@@ -204,7 +204,7 @@
             <div class="divider">OR</div>
 
             <!-- GOOGLE SIGNUP -->
-            <a href="/auth/google/signup" class="google-btn">
+            <a href="/auth/google/signup<%= fields.referralId ? '?ref=' + encodeURIComponent(fields.referralId) : '' %>" class="google-btn">
                 <img
                     src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
                     alt=""
