@@ -13,7 +13,7 @@ if (watchCustomerSession) {
       const { status } = await fetch('/auth/session', { cache: 'no-store' });
       if (status === 401 || status === 403) {
         clearInterval(sessionTimer);
-        window.location.replace(status === 403 ? '/login?blocked=1' : '/login');
+        window.location.replace('/login');
       }
     } catch {
       // Retry on the next check if the connection drops.

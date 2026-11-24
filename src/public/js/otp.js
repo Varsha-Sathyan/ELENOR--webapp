@@ -135,71 +135,13 @@ const resendButton = document.getElementById("resendButton");
 
 const countdownElement = document.getElementById("countdown");
 
-let remainingTime = Number(otpForm.dataset.resendSeconds) || 0;
-
-
-// =====================================
-// START COUNTDOWN
-// =====================================
-
-function startCountdown() {
-
-    remainingTime = Number(otpForm.dataset.resendSeconds) || 0;
-
-    resendButton.disabled = true;
-
-    countdownElement.style.display = "inline-block";
-
-    resendButton.style.display = "none";
-
-    updateTimer();
-
-    const interval = setInterval(function () {
-
-        remainingTime--;
-
-        updateTimer();
-
-        if (remainingTime <= 0) {
-
-            clearInterval(interval);
-
-            countdownElement.style.display = "none";
-
-            resendButton.disabled = false;
-
-            resendButton.style.display = "inline-block";
-
-        }
-
-    }, 1000);
-
-}
-
-
-// =====================================
-// UPDATE TIMER
-// =====================================
-
+const deadline = Date.now() + (Number(otpForm.dataset.resendSeconds) || 0) * 1000;
 function updateTimer() {
-
-    const minutes = Math.floor(remainingTime / 60);
-
-    const seconds = remainingTime % 60;
-
-    timerElement.textContent =
-
-        String(minutes).padStart(2, "0") +
-
-        ":" +
-
-        String(seconds).padStart(2, "0");
-
+ const remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+ timerElement.textContent = String(Math.floor(remaining / 60)).padStart(2, '0') + ':' + String(remaining % 60).padStart(2, '0');
+ countdownElement.style.display = remaining ? 'inline-block' : 'none';
+ resendButton.disabled = remaining > 0;
+ resendButton.style.display = remaining ? 'none' : 'inline-block';
+ otpForm.querySelector('button[type="submit"]').disabled = remaining === 0;
 }
-
-
-// =====================================
-// INITIALIZE
-// =====================================
-
-startCountdown();
+updateTimer(); setInterval(updateTimer, 1000);

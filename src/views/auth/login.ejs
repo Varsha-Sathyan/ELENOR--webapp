@@ -80,6 +80,7 @@
         </div>
       <% } %>
 
+      <% if (typeof success === "string" && success) { %><p class="notice" role="status"><%= success %></p><% } %>
       <form action="/login" method="POST" id="loginForm">
 
         <div class="form-group">

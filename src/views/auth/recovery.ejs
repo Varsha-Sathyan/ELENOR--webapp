@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reset Password | ELENOR</title>
+  <link rel="stylesheet" href="/css/account.css">
+  <link rel="stylesheet" href="/css/settings.css">
+</head>
+<body>
+<main class="edit-layout recovery">
+  <a class="wordmark" href="/">ELENOR<small>A HOUSE OF BEAUTY</small></a>
+  <section class="panel edit-panel">
+    <h1>Reset <em>Password</em></h1>
+    <% if (error) { %><p class="error" role="alert"><%= error %></p><% } %>
+    <% if (step === 'request') { %>
+      <p>Enter your account email to request a password reset code.</p>
+      <form action="/forgot-password" method="post">
+        <input type="hidden" name="_csrf" value="<%= recoveryToken %>">
+        <label for="email">EMAIL ADDRESS</label>
+        <input id="email" name="email" type="email" maxlength="254" autocomplete="email" required>
+        <button class="primary">Send Reset Code</button>
+      </form>
+    <% } else { %>
+      <p>If an eligible account is registered with that email, a four-digit reset code has been sent. Check your inbox and spam folder.</p>
+      <p data-code-countdown></p>
+      <form action="/reset-password" method="post" data-code-deadline="<%= resetDeadline %>">
+        <input type="hidden" name="_csrf" value="<%= recoveryToken %>">
+        <label for="otp">FOUR-DIGIT CODE</label><input id="otp" name="otp" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="one-time-code" required>
+        <label for="new-password">NEW PASSWORD</label><input id="new-password" name="newPassword" type="password" minlength="8" autocomplete="new-password" required>
+        <label for="confirm-password">CONFIRM PASSWORD</label><input id="confirm-password" name="confirmPassword" type="password" minlength="8" autocomplete="new-password" required>
+        <button class="primary">Reset Password</button>
+      </form>
+      <a class="settings-link" data-code-resend hidden href="/forgot-password">Resend code</a>
+    <% } %>
+    <a class="settings-link" href="/login">Back to Sign In</a>
+  </section>
+</main>
+<script src="/js/code-expiry.js" defer></script>
+</body>
+</html>

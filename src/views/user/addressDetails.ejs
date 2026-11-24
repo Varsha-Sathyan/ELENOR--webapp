@@ -1,0 +1,7 @@
+<address class="address-details">
+  <strong><%= address.fullName %></strong><br>
+  <%= address.line1 %><br>
+  <% if (address.line2) { %><%= address.line2 %><br><% } %>
+  <%= address.city %>, <%= address.region %> <%= address.postalCode %><br>
+  <%= address.country %><br><%= address.phone %>
+</address>

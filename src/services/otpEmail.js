@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-async function sendOtpEmail(email, otp) {
+async function sendOtpEmail(email, otp, purpose = 'account verification') {
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS?.replace(/\s/g, '');
   if (!user || !pass) {
@@ -15,12 +15,17 @@ async function sendOtpEmail(email, otp) {
     const result = await transport.sendMail({
       from: { name: 'ELENOR', address: user },
       to: email,
-      subject: 'Your ELENOR verification code',
-      text: `Your ELENOR verification code is ${otp}. It expires in 5 minutes. If you did not request this code, ignore this email.`
+      subject: 'Your ELENOR ' + purpose + ' code',
+      text: `Your ELENOR code for ${purpose} is ${otp}. It expires in 5 minutes. If you did not request this code, ignore this email.`
     });
     if (!result.accepted?.length) throw new Error('Recipient was not accepted.');
+    console.info('OTP email accepted by SMTP', { purpose, messageId: result.messageId });
   } catch (error) {
     // Keep SMTP credentials and raw provider responses out of application logs.
+    console.error('Verification email failed', {
+      code: error.code || 'SEND_FAILED',
+      responseCode: error.responseCode || null
+    });
     throw new Error('Unable to send the verification email. Check the sender settings and try again.');
   } finally {
     transport.close();

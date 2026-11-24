@@ -1,0 +1,10 @@
+const middleware = require('../middleware/recoveryMiddleware');
+const router = require('express').Router();
+const controller = require('../controllers/recoveryController');
+router.use(['/forgot-password', '/reset-password'], middleware.prepareRecovery);
+router.get('/forgot-password', controller.showForgotPassword);
+router.get('/reset-password', controller.showResetPassword);
+router.use(['/forgot-password', '/reset-password'], middleware.verifyCsrf);
+router.post('/forgot-password', controller.requestReset);
+router.post('/reset-password', controller.resetPassword);
+module.exports = router;

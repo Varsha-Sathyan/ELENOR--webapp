@@ -1,0 +1,11 @@
+const router = require('express').Router();
+const controller = require('../controllers/accountSettingsController');
+router.post('/profile/email', controller.requestEmailChange);
+router.get('/profile/email/verify', controller.showEmailVerification);
+router.post('/profile/email/verify', controller.verifyEmailChange);
+router.get('/profile/addresses', controller.listAddresses);
+router.get('/profile/addresses/new', controller.showNewAddress);
+router.get('/profile/addresses/:id/edit', controller.showEditAddress);
+router.post(['/profile/addresses', '/profile/addresses/:id'], controller.saveAddress);
+router.post('/profile/addresses/:id/delete', controller.deleteAddress);
+module.exports = router;

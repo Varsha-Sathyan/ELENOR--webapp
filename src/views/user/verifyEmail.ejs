@@ -1,0 +1,19 @@
+<%- include('account-header', {title: 'Verify Email Change'}) %>
+<link rel="stylesheet" href="/css/settings.css">
+<main class="edit-layout">
+  <section class="panel edit-panel">
+    <h1>Verify <em>Email Change</em></h1>
+    <% if (error) { %><p class="error" role="alert"><%= error %></p><% } %>
+    <p>Enter the code sent to your current email and the code sent to <%= newEmail || 'your new email' %>. Both expire in five minutes.</p>
+    <p data-code-countdown></p>
+    <form method="post" action="/profile/email/verify" data-code-deadline="<%= resetDeadline %>">
+      <input type="hidden" name="_csrf" value="<%= token %>">
+      <label for="old-code">CODE FROM CURRENT EMAIL</label><input id="old-code" name="oldCode" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" required>
+      <label for="new-code">CODE FROM NEW EMAIL</label><input id="new-code" name="newCode" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" required>
+      <button class="primary">Verify and Update Email</button>
+    </form>
+    <a class="settings-link" data-code-resend hidden href="/profile/edit">Request new codes</a>
+  </section>
+</main>
+<script src="/js/code-expiry.js" defer></script>
+<%- include('account-footer') %>

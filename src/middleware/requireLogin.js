@@ -11,7 +11,7 @@ async function requireLogin(req, res, next) {
     try {
         const user = await User.findById(req.session.userId).select('isBlocked sessionVersion');
         if (!user || user.isBlocked || (req.session.sessionVersion ?? 0) !== (user.sessionVersion ?? 0)) {
-            const destination = user?.isBlocked ? '/login?blocked=1' : '/login';
+            const destination = '/login';
             return req.session.destroy(error => {
                 if (error) return next(error);
                 res.clearCookie('elenor.sid');

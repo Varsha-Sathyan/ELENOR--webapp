@@ -1,0 +1,28 @@
+<%- include('account-header', {title: address._id ? 'Edit Address' : 'Add Address'}) %>
+<link rel="stylesheet" href="/css/settings.css">
+<main class="edit-layout">
+  <section class="panel edit-panel">
+    <h1><%= address._id ? 'Edit' : 'Add' %> <em>Address</em></h1>
+    <% if (error) { %><p class="error" role="alert"><%= error %></p><% } %>
+    <form action="<%= action %>" method="post">
+      <input type="hidden" name="_csrf" value="<%= token %>">
+      <% for (const [name, label, limit, autocomplete] of [
+        ['label','ADDRESS LABEL (HOME, WORK)',40,'off'],
+        ['fullName','RECIPIENT NAME',120,'name'],
+        ['phone','PHONE',30,'tel'],
+        ['line1','ADDRESS LINE 1',160,'address-line1'],
+        ['line2','ADDRESS LINE 2 (OPTIONAL)',160,'address-line2'],
+        ['city','CITY',80,'address-level2'],
+        ['region','STATE / REGION',80,'address-level1'],
+        ['postalCode','POSTAL CODE',20,'postal-code'],
+        ['country','COUNTRY',80,'country-name']
+      ]) { %>
+        <label for="<%= name %>"><%= label %></label>
+        <input id="<%= name %>" name="<%= name %>" type="<%= name === 'phone' ? 'tel' : 'text' %>" value="<%= typeof address[name] === 'string' ? address[name] : '' %>" maxlength="<%= limit %>" autocomplete="<%= autocomplete %>" <%= name !== 'line2' ? 'required' : '' %>>
+      <% } %>
+      <button class="primary">Save Address</button>
+    </form>
+    <a class="settings-link" href="/profile/addresses">Cancel</a>
+  </section>
+</main>
+<%- include('account-footer') %>

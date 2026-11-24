@@ -1,0 +1,20 @@
+<%- include('account-header', {title: 'My Addresses'}) %>
+<link rel="stylesheet" href="/css/settings.css">
+<main class="settings-page">
+  <div class="settings-heading"><h1>My <em>Addresses</em></h1><a class="settings-button" href="/profile/addresses/new">Add Address</a></div>
+  <% if (!account.addresses.length) { %><p>You haven’t added an address yet.</p><% } %>
+  <div class="address-grid">
+    <% for (const address of account.addresses) { %>
+      <article class="panel address-card">
+        <h2><%= address.label %></h2>
+        <%- include('addressDetails', {address}) %>
+        <div class="address-actions"><a class="settings-button secondary" href="/profile/addresses/<%= address.id %>/edit">Edit</a>
+        <form method="post" action="/profile/addresses/<%= address.id %>/delete">
+          <input type="hidden" name="_csrf" value="<%= token %>"><button class="settings-button danger">Delete</button>
+        </form></div>
+      </article>
+    <% } %>
+  </div>
+  <a class="settings-link" href="/profile">← Back to My Account</a>
+</main>
+<%- include('account-footer') %>
