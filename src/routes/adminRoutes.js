@@ -7,6 +7,7 @@ router.get('/login', controller.showLogin);
 router.post('/login', controller.login);
 router.use(requireAdmin);
 router.get('/users', controller.listUsers);
+router.get('/users/:id', controller.showUser);
 router.post('/users/:id/access', controller.updateUserAccess);
 router.get(['/', '/dashboard'],controller.showDashboard);
 router.post('/logout',controller.logout);

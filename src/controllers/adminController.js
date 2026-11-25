@@ -70,3 +70,14 @@ exports.logout = (req,res,next)=>{
   if(req.body._csrf !== req.session.adminToken || !req.session.adminToken) return res.status(403).send('Please reload the dashboard and try again.');
   req.session.destroy(err=>{if(err)return next(err);res.clearCookie('elenor.admin.sid', { path: '/admin' });res.redirect('/admin/login');});
 };
+
+exports.showUser = async (req, res, next) => {
+  try {
+    if (!/^[a-f0-9]{24}$/i.test(req.params.id)) return next();
+    const customer = await User.findById(req.params.id)
+      .select('fullName email phone avatar addresses emailVerified isBlocked createdAt').lean();
+    if (!customer) return next();
+    res.set('Cache-Control', 'no-store');
+    res.render('admin/userDetails', { customer, token: req.session.adminToken, backUrl: userListUrl(userListOptions(req.query)) });
+  } catch (error) { next(error); }
+};

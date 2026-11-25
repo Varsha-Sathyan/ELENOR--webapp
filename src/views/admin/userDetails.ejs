@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Customer Details | ELENOR</title>
+  <link rel="stylesheet" href="/css/admin.css"><link rel="stylesheet" href="/css/admin-users.css">
+</head>
+<body>
+  <%- include('sidebar', { active: 'users' }) %>
+  <main class="admin-main users-main">
+    <a class="customer-back" href="<%= backUrl %>">← Back to User Management</a>
+    <header class="users-heading"><div><p class="users-kicker">CUSTOMER PROFILE</p><h1>Customer <span>Details</span></h1></div></header>
+    <section class="users-panel customer-details">
+      <div class="customer-details-identity">
+        <div class="customer-avatar customer-details-avatar">
+          <% if (customer.avatar && /^data:image\/jpeg;base64,[A-Za-z0-9+/]+=*$/.test(customer.avatar)) { %>
+            <img src="<%= customer.avatar %>" alt="<%= customer.fullName %>'s profile photo">
+          <% } else { %><%= (customer.fullName || '?').trim().split(/\s+/).slice(0,2).map(n => n[0]).join('').toUpperCase() %><% } %>
+        </div>
+        <div><h2><%= customer.fullName %></h2><span class="user-status <%= customer.isBlocked ? 'blocked' : '' %>"><%= customer.isBlocked ? 'Blocked' : 'Active' %></span></div>
+      </div>
+      <dl class="customer-details-grid">
+        <div><dt>Email address</dt><dd><%= customer.email %></dd></div>
+        <div><dt>Phone number</dt><dd><%= customer.phone || 'Not provided' %></dd></div>
+        <div><dt>Email verification</dt><dd><%= customer.emailVerified ? 'Verified' : 'Not verified' %></dd></div>
+        <div><dt>Joined on</dt><dd><%= customer.createdAt ? new Intl.DateTimeFormat('en-IN', { dateStyle: 'long', timeZone: 'Asia/Kolkata' }).format(customer.createdAt) : 'Not available' %></dd></div>
+      </dl>
+      <section class="customer-addresses"><h2>Saved addresses</h2>
+        <% if (!customer.addresses?.length) { %><p>No saved addresses.</p><% } %>
+        <div class="customer-details-grid"><% for (const address of customer.addresses || []) { %>
+          <article class="customer-address"><h3><%= address.label %></h3><p><%= address.fullName %><br><%= address.line1 %><% if (address.line2) { %><br><%= address.line2 %><% } %><br><%= address.city %>, <%= address.region %> <%= address.postalCode %><br><%= address.country %><br><%= address.phone %></p></article>
+        <% } %></div>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
